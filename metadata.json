@@ -1,0 +1,6 @@
+{
+  "name": "3D Car Collision Simulator",
+  "description": "물리 엔진 기반의 실시간 3D 차량 충돌 시뮬레이터. 정면, 측면, 후면 충돌 프리셋, 가변 속도 및 질량 설정, 충돌 시 메쉬 실시간 변형, 파편 이펙트, 상세한 물리 텔레메트리 그래프를 제공합니다.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
