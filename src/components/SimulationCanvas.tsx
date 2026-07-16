@@ -499,6 +499,9 @@ export const SimulationCanvas: React.FC<SimulationCanvasProps> = ({
   const collisionOccurredRef = useRef<boolean>(false);
   const totalDeformationSumRef = useRef<number>(0);
 
+  // Camera shake intensity
+  const cameraShakeIntensityRef = useRef<number>(0);
+
   // Capture keystrokes for manual driving
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -2976,7 +2979,32 @@ export const SimulationCanvas: React.FC<SimulationCanvasProps> = ({
         adjustCameraFollow(vehicles);
 
         if (controlsRef.current) controlsRef.current.update();
-        rendererRef.current.render(scene, cameraRef.current);
+
+        // Update screen shake decay
+        if (cameraShakeIntensityRef.current > 0) {
+          cameraShakeIntensityRef.current -= dt * 2.5; // decay shake over time
+          if (cameraShakeIntensityRef.current < 0) {
+            cameraShakeIntensityRef.current = 0;
+          }
+        }
+
+        const camera = cameraRef.current;
+        const originalPos = camera.position.clone();
+        const intensity = cameraShakeIntensityRef.current;
+        
+        if (intensity > 0.01) {
+          const shakeX = (Math.random() - 0.5) * intensity;
+          const shakeY = (Math.random() - 0.5) * intensity;
+          const shakeZ = (Math.random() - 0.5) * intensity;
+          camera.position.add(new THREE.Vector3(shakeX, shakeY, shakeZ));
+        }
+
+        rendererRef.current.render(scene, camera);
+
+        // Restore original camera position for OrbitControls and subsequent frames
+        if (intensity > 0.01) {
+          camera.position.copy(originalPos);
+        }
       }
 
       // Update 3D overlay text elements
@@ -3663,6 +3691,12 @@ export const SimulationCanvas: React.FC<SimulationCanvasProps> = ({
   // Trigger particle emissions (sparks, glass, smoke) at collision center
   const triggerCollisionBurst = (colPoint: THREE.Vector3, normal: THREE.Vector3, forceKN: number) => {
     // Disabled as requested (충돌 파티클 제거)
+
+    // 화면 흔들림 효과 설정 (충격 크기에 비례)
+    const baseShake = Math.min(forceKN / 700, 1.5); // 최대 흔들림 세기 제한
+    if (baseShake > 0.05) {
+      cameraShakeIntensityRef.current = baseShake;
+    }
   };
 
   // Render and update particle dynamics
