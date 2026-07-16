@@ -69,7 +69,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
   },
   {
     id: 'rear_end',
-    name: '후방 추돌 (Rear-end Collision)',
+    name: '후방 충돌 (Rear-end Collision)',
     description: '앞차가 신호대기 혹은 저속 주행 중일 때, 뒤따르던 화물차가 제동 장치 이상 등으로 후방을 추돌하는 시나리오입니다. 충돌 후 앞차가 튕겨 나가는 현상이 두드러집니다.',
     elasticity: 0.25,
     friction: 0.7,
@@ -77,7 +77,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
       {
         id: 'A',
         type: 'truck',
-        name: '후방 추돌차 (봉고 화물차)',
+        name: '후방 충돌차 (봉고 화물차)',
         mass: CAR_SPECS_PRESETS.truck.defaultMass,
         initialSpeed: 70,
         color: '#4b5563',
@@ -124,7 +124,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
   },
   {
     id: 'multi_pileup',
-    name: '3중 연쇄 추돌 (3-Vehicle Pile-up)',
+    name: '3중 연쇄 충돌 (3-Vehicle Pile-up)',
     description: '주행 차량이 대기 중인 차량을 추돌하고, 그 충격으로 튕겨 나간 차가 그 앞의 또 다른 차를 추돌하는 다중 연쇄 충돌 사고를 재현합니다.',
     elasticity: 0.2,
     friction: 0.65,
