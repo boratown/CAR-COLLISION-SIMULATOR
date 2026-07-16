@@ -3794,28 +3794,8 @@ export const SimulationCanvas: React.FC<SimulationCanvasProps> = ({
 
   // Generate a kinetic overlay cartoon text floater in the 3D space
   const spawnCrashText = (text: string, pos: THREE.Vector3) => {
-    const parentContainer = mountRef.current;
-    if (!parentContainer) return;
-
-    const popup = document.createElement('div');
-    popup.className = `absolute select-none pointer-events-none px-4 py-2 font-black text-3xl tracking-wider uppercase rounded-xl border-4 transform -translate-x-1/2 -translate-y-1/2 scale-100 transition-all duration-300`;
-    
-    // Style cartoon POP sound
-    if (text.includes('BOOM') || text.includes('SLAM')) {
-      popup.className += ' bg-amber-500 text-white border-yellow-300 text-shadow-lg shadow-2xl skew-x-12';
-    } else {
-      popup.className += ' bg-rose-600 text-white border-red-300 text-shadow-md shadow-xl -skew-x-6';
-    }
-    
-    popup.textContent = text;
-    parentContainer.appendChild(popup);
-
-    popupsRef.current.push({
-      element: popup,
-      worldPos: pos.clone(),
-      age: 0,
-      maxAge: 45 // frames (~0.75s)
-    });
+    // Disabled as requested (충돌 텍스트 제거)
+    return;
   };
 
   // Project 3D coordinate onto 2D viewport coordinates to keep alerts in correct visual space
